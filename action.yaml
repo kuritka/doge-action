@@ -15,6 +15,6 @@ runs:
   steps:
     - id: main
       shell: bash
-      run: ${{ github.action_path }}/run.sh deploy
+      run: ${{ github.action_path }}/run.sh
       env:
         CLUSTER_NAME: ${{ inputs.cluster-name }}
