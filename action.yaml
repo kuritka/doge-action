@@ -1,6 +1,6 @@
 name: doge-action
 description: "test action written in GO"
-author: MichalK
+author: kuritka
 # see: https://haya14busa.github.io/github-action-brandings/
 branding:
   icon: grid
@@ -9,12 +9,36 @@ inputs:
   cluster-name:
     description: "(Required) Cluster name."
     required: true
+  args:
+    description: "(Optional) Additional arguments to k3d cluster. see: https://k3d.io/usage/commands/"
+    required: false
+  network:
+    description: "(Optional) Cluster network. Default value k3d-action-bridge-network"
+    required: false
+  subnet-CIDR:
+    description: "(Optional) Cluster subnet CIDR. Default value 172.16.0.0/24 in case network is not set."
+    required: false
+  use-default-registry:
+    description: "(Optional) Autogenerate docker registry accessible from the cluster."
+    required: false
+    default: "false"
+  registry-port:
+    description: "(Optional) Registry port. Default value 5000."
+    required: false
 
 runs:
   using: composite
   steps:
     - id: main
       shell: bash
-      run: ${{ github.action_path }}/run.sh deploy
+      run: |
+        cd ${{ github.action_path }}
+        go mod tidy
+        go run main.go create
       env:
         CLUSTER_NAME: ${{ inputs.cluster-name }}
+        ARGS: ${{ inputs.args }}
+        NETWORK: ${{ inputs.network }}
+        SUBNET_CIDR: ${{ inputs.subnet-CIDR }}
+        USE_DEFAULT_REGISTRY: ${{ inputs.use-default-registry }}
+        REGISTRY_PORT: ${{ inputs.registry-port }}
