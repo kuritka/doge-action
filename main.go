@@ -1,14 +1,9 @@
 package main
 
 import (
-	"fmt"
-	"github.com/AbsaOSS/gopkg/env"
+	"github.com/kuritka/doge-action/internal/cmd"
 )
 
-const clusterName = "CLUSTER_NAME"
-
-func main(){
-	fmt.Println("Hello from DOGE 🐩🐩 action")
-	x := env.GetEnvAsStringOrFallback(clusterName, "ERROR")
-	fmt.Println(x)
+func main() {
+	cmd.Execute()
 }
