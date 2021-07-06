@@ -1,6 +1,6 @@
 name: doge-action
 description: "test action written in GO"
-author: MichalK
+author: kuritka
 # see: https://haya14busa.github.io/github-action-brandings/
 branding:
   icon: grid
