@@ -1,3 +1,6 @@
 module github.com/kuritka/doge-action
 
-go 1.16
+// 1.15 curently supported by GitHub runner
+go 1.15
+
+require github.com/AbsaOSS/gopkg v0.1.2
