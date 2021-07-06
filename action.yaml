@@ -15,6 +15,6 @@ runs:
   steps:
     - id: main
       shell: bash
-      run: go mod tidy && go run ${{ github.action_path }}/main.go
+      run: go run ${{ github.action_path }}/main.go
       env:
         CLUSTER_NAME: ${{ inputs.cluster-name }}
