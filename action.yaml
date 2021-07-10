@@ -25,6 +25,9 @@ inputs:
   registry-port:
     description: "(Optional) Registry port. Default value 5000."
     required: false
+  verbose:
+    description: "(Optional) Verbosity output. Default value: false"
+    required: false
 
 runs:
   using: composite
@@ -42,3 +45,4 @@ runs:
         SUBNET_CIDR: ${{ inputs.subnet-CIDR }}
         USE_DEFAULT_REGISTRY: ${{ inputs.use-default-registry }}
         REGISTRY_PORT: ${{ inputs.registry-port }}
+        VERBOSE: ${{ inputs.verbose }}

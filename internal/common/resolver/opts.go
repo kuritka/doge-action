@@ -20,6 +20,7 @@ const (
 	envSubnetCIDR      = "SUBNET_CIDR"
 	envDefaultRegistry = "USE_DEFAULT_REGISTRY"
 	envRegistryPort    = "REGISTRY_PORT"
+	envVerbose         = "VERBOSE"
 )
 
 // Options defines action input
@@ -37,6 +38,8 @@ type Options struct {
 	UseRegistry bool
 	// Registry port
 	RegistryPort int
+	// Verbosity
+	Verbose bool
 }
 
 // String prints options as JSON

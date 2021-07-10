@@ -3,6 +3,8 @@ package cmd
 import (
 	"context"
 
+	"github.com/rs/zerolog"
+
 	"github.com/kuritka/doge-action/internal/common/container"
 	"github.com/kuritka/doge-action/internal/common/runner"
 	"github.com/kuritka/doge-action/internal/impl/create"
@@ -23,6 +25,9 @@ var createCommand = &cobra.Command{
 		o, err := resolver.NewResolver().Resolve()
 		guards.Must(err, "reading environment variables")
 		logger.Debug().Msgf("loaded configuration: \n %s", aurora.BrightWhite(o))
+		if o.Verbose {
+			zerolog.SetGlobalLevel(zerolog.DebugLevel)
+		}
 		c := container.NewDocker(context.Background())
 		runner.NewCommonRunner(create.NewCluster(c, o)).MustRun()
 

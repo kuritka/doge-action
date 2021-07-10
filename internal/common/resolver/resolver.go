@@ -29,6 +29,7 @@ func (r *Resolver) Resolve() (o Options, err error) {
 	o.RegistryPort, _ = env.GetEnvAsIntOrFallback(envRegistryPort, 5000)
 	_, o.Subnet, cidrerr = net.ParseCIDR(env.GetEnvAsStringOrFallback(envSubnetCIDR, defaultSubnet))
 	err = r.validate(o, cidrerr)
+	o.Verbose = env.GetEnvAsBoolOrFallback(envVerbose, false)
 	return
 }
 

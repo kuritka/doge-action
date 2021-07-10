@@ -42,15 +42,15 @@ func (c *Cluster) Run() (err error) {
 		id := c.container.NetworkCreate(c.opts.Network, c.opts.Subnet)
 		logger.Info().Msgf("🕸🧵 network created %s %s", BrightCyan(c.opts.Network), BrightCyan(id))
 	}
-	logger.Info().Msgf("%s %s", BrightYellow("☕🤏 downloading k3d"), BrightCyan(common.K3dVersion))
+	logger.Info().Msgf("%s %s", BrightYellow("☕ 🤏 downloading k3d"), BrightCyan(common.K3dVersion))
 	o, err = c.downloadK3d()
 	logger.Debug().Msg(BrightWhite(o).String())
 	guards.Must(err, "downloading k3d")
-	logger.Info().Msgf("🍿🤏😋 %s", BrightYellow("installing k3d, the operation may take tens of seconds..."))
-	o, err = c.runK3d()
+	logger.Info().Msgf("🍿🤏😋 %s", BrightYellow("installing k3d, the operation may take several seconds..."))
+	o, err = c.runK3d(c.opts.Verbose)
 	guards.Must(err, o)
-	fmt.Println(o)
-	logger.Info().Msgf("⌛ %s", BrightYellow("wait until all agents are ready"))
+	logger.Info().Msgf("\n%s", o)
+	logger.Info().Msgf("⌛  %s", BrightYellow("wait until all agents are ready"))
 	c.waitForNodesAreReady()
 	logger.Info().Msgf("🚀🚀🚀 %s", BrightCyan("DONE"))
 	return
@@ -65,8 +65,12 @@ func (c *Cluster) downloadK3d() (o string, err error) {
 	return command(a)
 }
 
-func (c *Cluster) runK3d() (o string, err error) {
-	a := fmt.Sprintf("k3d cluster create %s --wait %s --network %s", c.opts.ClusterName, c.opts.Args, c.opts.Network)
+func (c *Cluster) runK3d(verbose bool) (o string, err error) {
+	var v string
+	if verbose {
+		v = "--verbose"
+	}
+	a := fmt.Sprintf("k3d cluster create %s --wait %s --network %s %s", c.opts.ClusterName, c.opts.Args, c.opts.Network,v)
 	return command(a)
 }
 

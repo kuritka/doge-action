@@ -13,7 +13,7 @@ var Log *zerolog.Logger
 
 //init initializes the logger
 func init() {
-	zerolog.SetGlobalLevel(zerolog.DebugLevel)
+	zerolog.SetGlobalLevel(zerolog.InfoLevel)
 	zerolog.ErrorStackMarshaler = pkgerrors.MarshalStack
 	l := zerolog.New(zerolog.ConsoleWriter{Out: os.Stderr, TimeFormat: "15:04:05", NoColor: false}).
 		With().
